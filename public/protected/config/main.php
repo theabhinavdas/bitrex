@@ -57,7 +57,7 @@ return array(
             ),
         ),
         'db' => array(
-            'connectionString' => 'mysql:host=bitrex.cbuqrrbjabbr.us-east-1.rds.amazonaws.com;dbname=bitrex',
+            'connectionString' => 'mysql:host=bitrex.cxtwoq5foxjr.us-east-1.rds.amazonaws.com;dbname=bitrex',
             'emulatePrepare' => true,
             'username' => 'bitrex',
             'password' => 'aFCKYcNT5X7LJp9gWSpG',
