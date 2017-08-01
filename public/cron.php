@@ -99,32 +99,32 @@ function compareWithPrevious($mLatestId) {
     $anyMessage = false;
     // Check 10% difference in ask
     if (($currentAsk-$previousAsk) >= 10 || ($currentAsk-$previousAsk) <= -10) {
-        $messageString = $messageString . ' | Ask Delta: ' . $deltaAsk . ' | Previous: ' . $previousAsk . ' | Current: ' . $currentAsk;
+        $messageString = $messageString . ' | Ask Delta: ' . $deltaAsk . ' | Previous: ' . $previousAsk . ' | Current: ' . $currentAsk . "\n";
         $anyMessage = true;
     }
     // Check 10% difference in bid
     if (($currentBid-$previousBid) >= 10 || ($currentBid-$previousBid) <= -10) {
-        $messageString = $messageString . ' | Bid Delta: ' . $deltaBid . ' | Previous: ' . $previousBid . ' | Current: ' . $currentBid;
+        $messageString = $messageString . ' | Bid Delta: ' . $deltaBid . ' | Previous: ' . $previousBid . ' | Current: ' . $currentBid . "\n";
         $anyMessage = true;
     }
     // Check for increase in buy orders 
     if (($currentBuyOrders > $previousBuyOrders)) {
-        $messageString = $messageString . 'There is an increase in buy orders. Previous Buy Orders: ' . $previousBuyOrders . ' | Current Buy Orders: ' . $currentBuyOrders;   
+        $messageString = $messageString . 'There is an increase in buy orders. Previous Buy Orders: ' . $previousBuyOrders . ' | Current Buy Orders: ' . $currentBuyOrders . "\n";   
         $anyMessage = true;
     }
     // Check for decrease in buy orders 
     if (($currentBuyOrders < $previousBuyOrders)) {
-        $messageString = $messageString . 'There is a decrease in buy orders. Previous Buy Orders: ' . $previousBuyOrders . ' | Current Buy Orders: ' . $currentBuyOrders;   
+        $messageString = $messageString . 'There is a decrease in buy orders. Previous Buy Orders: ' . $previousBuyOrders . ' | Current Buy Orders: ' . $currentBuyOrders . "\n";   
         $anyMessage = true;
     }
     // Check for increase in sell orders 
     if (($currentSellOrders > $previousSellOrders)) {
-        $messageString = $messageString . 'There is an increase in sell orders. Previous Sell Orders: ' . $previousSellOrders . ' | Current Sell Orders: ' . $currentSellOrders;      
+        $messageString = $messageString . 'There is an increase in sell orders. Previous Sell Orders: ' . $previousSellOrders . ' | Current Sell Orders: ' . $currentSellOrders . "\n";      
         $anyMessage = true;
     }
     // Check for decrease in sell orders 
     if (($currentSellOrders < $previousSellOrders)) {
-        $messageString = $messageString . 'There is a decrease in sell orders. Previous Sell Orders: ' . $previousSellOrders . ' | Current Sell Orders: ' . $currentSellOrders;      
+        $messageString = $messageString . 'There is a decrease in sell orders. Previous Sell Orders: ' . $previousSellOrders . ' | Current Sell Orders: ' . $currentSellOrders . "\n";      
         $anyMessage = true;
     }
 
