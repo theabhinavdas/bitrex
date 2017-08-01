@@ -79,15 +79,14 @@ function compareWithPrevious($mLatestId) {
     // Get last two rows based on the market name
 
     $records = Summary::model()->findAll(
-         array('select'=>'id', 'condition'=>'market_name=:market_name' , 'order'=>'id DESC', 'limit'=>2, 'params'=>array(':market_name'=>$marketName)));
-    $previousRecord = $records[1]->id;    
+         array('select'=>'id, bid, ask, open_buy_orders, open_sell_orders', 'condition'=>'market_name=:market_name' , 'order'=>'id DESC', 'limit'=>2, 'params'=>array(':market_name'=>$marketName)));
+    $previousRecord = $records[1]; 
 
     // Get the previous bid & ask
-    $summary = Summary::model()->findByPk($previousRecord);
-    $previousBid = $summary['bid'];
-    $previousAsk = $summary['ask'];
-    $previousBuyOrders = $summary['open_buy_orders'];
-    $previousSellOrders = $summary['open_sell_orders'];
+    $previousBid = $previousRecord['bid'];
+    $previousAsk = $previousRecord['ask'];
+    $previousBuyOrders = $previousRecord['open_buy_orders'];
+    $previousSellOrders = $previousRecord['open_sell_orders'];
 
     // Quick calculations
     $deltaBid = $currentBid - $previousBid;
@@ -95,30 +94,45 @@ function compareWithPrevious($mLatestId) {
     $deltaBuyOrders = $currentBuyOrders - $previousBuyOrders;
     $deltaSellOrders = $currentSellOrders - $previousSellOrders;
     
+    // The whole message based on all the conditions below
+    $messageString = "";
+    $anyMessage = false;
     // Check 10% difference in ask
     if (($currentAsk-$previousAsk) >= 10 || ($currentAsk-$previousAsk) <= -10) {
-        curlSendSlack('Market: ' . $marketName . ' | Ask Delta: ' . $deltaAsk . ' | Previous: ' . $previousAsk . ' | Current: ' . $currentAsk);
+        $messageString = $messageString . ' | Ask Delta: ' . $deltaAsk . ' | Previous: ' . $previousAsk . ' | Current: ' . $currentAsk;
+        $anyMessage = true;
     }
     // Check 10% difference in bid
     if (($currentBid-$previousBid) >= 10 || ($currentBid-$previousBid) <= -10) {
-        curlSendSlack('Market: ' . $marketName . ' | Bid Delta: ' . $deltaBid . ' | Previous: ' . $previousBid . ' | Current: ' . $currentBid);
+        $messageString = $messageString . ' | Bid Delta: ' . $deltaBid . ' | Previous: ' . $previousBid . ' | Current: ' . $currentBid;
+        $anyMessage = true;
     }
     // Check for increase in buy orders 
     if (($currentBuyOrders > $previousBuyOrders)) {
-        curlSendSlack('There is an increase in buy orders in the ' . $marketName . ' market. Previous Buy Orders: ' . $previousBuyOrders . ' | Current Buy Orders: ' . $currentBuyOrders);   
+        $messageString = $messageString . 'There is an increase in buy orders. Previous Buy Orders: ' . $previousBuyOrders . ' | Current Buy Orders: ' . $currentBuyOrders;   
+        $anyMessage = true;
     }
     // Check for decrease in buy orders 
     if (($currentBuyOrders < $previousBuyOrders)) {
-        curlSendSlack('There is a decrease in buy orders in the ' . $marketName . ' market. Previous Buy Orders: ' . $previousBuyOrders . ' | Current Buy Orders: ' . $currentBuyOrders);   
+        $messageString = $messageString . 'There is a decrease in buy orders. Previous Buy Orders: ' . $previousBuyOrders . ' | Current Buy Orders: ' . $currentBuyOrders;   
+        $anyMessage = true;
     }
     // Check for increase in sell orders 
     if (($currentSellOrders > $previousSellOrders)) {
-        curlSendSlack('There is an increase in sell orders in the ' . $marketName . ' market. Previous Sell Orders: ' . $previousSellOrders . ' | Current Sell Orders: ' . $currentSellOrders);      
+        $messageString = $messageString . 'There is an increase in sell orders. Previous Sell Orders: ' . $previousSellOrders . ' | Current Sell Orders: ' . $currentSellOrders;      
+        $anyMessage = true;
     }
     // Check for decrease in sell orders 
     if (($currentSellOrders < $previousSellOrders)) {
-        curlSendSlack('There is a decrease in sell orders in the ' . $marketName . ' market. Previous Sell Orders: ' . $previousSellOrders . ' | Current Sell Orders: ' . $currentSellOrders);      
+        $messageString = $messageString . 'There is a decrease in sell orders. Previous Sell Orders: ' . $previousSellOrders . ' | Current Sell Orders: ' . $currentSellOrders;      
+        $anyMessage = true;
     }
+
+    if ($anyMessage == true) {
+        $messageString = 'Market:' . $marketName . $messageString;
+    }
+
+    curlSendSlack($messageString);
     
 }
 
