@@ -3,9 +3,11 @@
 define('CORNJOB', TRUE);
 include("index.php");
 
+
 $link="https://bittrex.com/api/v1.1/public/getmarketsummaries";
 $buy_result = @file_get_contents($link);
 $buy_decoded = json_decode($buy_result, true);
+
 if(count($buy_decoded['result'])>0)
 {
     foreach($buy_decoded['result'] as $result)
@@ -21,6 +23,103 @@ if(count($buy_decoded['result'])>0)
         $summary->open_buy_orders=$result['OpenBuyOrders'];
         $summary->open_sell_orders=$result['OpenSellOrders'];
         $summary->save();
+        $latestId = $summary->getPrimaryKey();
+        compareWithPrevious($latestId);
+        echo "Done with one more.";
     }
 }
+
+/**
+* Code to check for the rules give:
+* (1) 10% change/spread in bid/ask
+* (2) Switch between buy orders and sell orders
+*
+* Message Format:
+* Name of market - Change - What changed by how much - Changed values 
+**/
+
+/**
+* Code to send message to the Slack channel - Bitrex-Tests
+*
+**/
+function curlSendSlack($postData)
+{
+    $url = "https://hooks.slack.com/services/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";
+
+    $postData = '{"text":' . '"' . $postData . '"' . "}";
+
+    $ch = curl_init();  
+
+    curl_setopt($ch,CURLOPT_URL,$url);
+    curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+    curl_setopt($ch,CURLOPT_HEADER, false); 
+    curl_setopt($ch, CURLOPT_POST, count($postData));
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);    
+
+    $output=curl_exec($ch);
+
+    curl_close($ch);
+    return $output;
+}
+
+/**
+* Code that performs the rule-base comparison to trigger Slack notifs/messages
+*/ 
+function compareWithPrevious($mLatestId) {
+
+
+    // Get the current bid & ask
+    $summary = Summary::model()->findByPk($mLatestId);
+    $currentBid = $summary['bid'];
+    $currentAsk = $summary['ask'];
+    $currentBuyOrders = $summary['open_buy_orders'];
+    $currentSellOrders = $summary['open_sell_orders'];
+    $marketName = $summary['market_name'];
+
+    // Get last two rows based on the market name
+
+    $records = Summary::model()->findAll(
+         array('select'=>'id', 'condition'=>'market_name=:market_name' , 'order'=>'id DESC', 'limit'=>2, 'params'=>array(':market_name'=>$marketName)));
+    $previousRecord = $records[1]->id;    
+
+    // Get the previous bid & ask
+    $summary = Summary::model()->findByPk($previousRecord);
+    $previousBid = $summary['bid'];
+    $previousAsk = $summary['ask'];
+    $previousBuyOrders = $summary['open_buy_orders'];
+    $previousSellOrders = $summary['open_sell_orders'];
+
+    // Quick calculations
+    $deltaBid = $currentBid - $previousBid;
+    $deltaAsk = $currentAsk - $previousAsk;
+    $deltaBuyOrders = $currentBuyOrders - $previousBuyOrders;
+    $deltaSellOrders = $currentSellOrders - $previousSellOrders;
+    
+    // Check 10% difference in ask
+    if (($currentAsk-$previousAsk) >= 10 || ($currentAsk-$previousAsk) <= -10) {
+        curlSendSlack('Market: ' . $marketName . ' | Ask Delta: ' . $deltaAsk . ' | Previous: ' . $previousAsk . ' | Current: ' . $currentAsk);
+    }
+    // Check 10% difference in bid
+    if (($currentBid-$previousBid) >= 10 || ($currentBid-$previousBid) <= -10) {
+        curlSendSlack('Market: ' . $marketName . ' | Bid Delta: ' . $deltaBid . ' | Previous: ' . $previousBid . ' | Current: ' . $currentBid);
+    }
+    // Check for increase in buy orders 
+    if (($currentBuyOrders > $previousBuyOrders)) {
+        curlSendSlack('There is an increase in buy orders in the ' . $marketName . ' market. Previous Buy Orders: ' . $previousBuyOrders . ' | Current Buy Orders: ' . $currentBuyOrders);   
+    }
+    // Check for decrease in buy orders 
+    if (($currentBuyOrders < $previousBuyOrders)) {
+        curlSendSlack('There is a decrease in buy orders in the ' . $marketName . ' market. Previous Buy Orders: ' . $previousBuyOrders . ' | Current Buy Orders: ' . $currentBuyOrders);   
+    }
+    // Check for increase in sell orders 
+    if (($currentSellOrders > $previousSellOrders)) {
+        curlSendSlack('There is an increase in sell orders in the ' . $marketName . ' market. Previous Sell Orders: ' . $previousSellOrders . ' | Current Sell Orders: ' . $currentSellOrders);      
+    }
+    // Check for decrease in sell orders 
+    if (($currentSellOrders < $previousSellOrders)) {
+        curlSendSlack('There is a decrease in sell orders in the ' . $marketName . ' market. Previous Sell Orders: ' . $previousSellOrders . ' | Current Sell Orders: ' . $currentSellOrders);      
+    }
+    
+}
+
 ?>
