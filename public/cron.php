@@ -8,10 +8,25 @@ $link="https://bittrex.com/api/v1.1/public/getmarketsummaries";
 $buy_result = @file_get_contents($link);
 $buy_decoded = json_decode($buy_result, true);
 
+/**
+* $allMarketChangeMessage contains full message string because of
+* Slack's rate cutting measures for bots (1 message per second)
+* also had to break up the whole string into two parts as it kept breaking
+* mid-way.
+**/
+$allMarketChangeMessage = array("", "");
+$halfMark = 126;
+$allMarketChangeMessageIndex = 0;
+
 if(count($buy_decoded['result'])>0)
 {
     foreach($buy_decoded['result'] as $result)
     {
+        // Check if $allMarketChangeMessage array has 126 elements
+        // if so, change index to 1
+        if ($halfMark == 0) {
+            $allMarketChangeMessageIndex = 1;
+        }
         $summary = new Summary();
         $summary->market_name=$result['MarketName'];
         $summary->volume=$result['Volume'];
@@ -25,8 +40,12 @@ if(count($buy_decoded['result'])>0)
         $summary->save();
         $latestId = $summary->getPrimaryKey();
         compareWithPrevious($latestId);
-        echo "Done with one more.";
+
+        $halfMark--;
     }
+    curlSendSlack($allMarketChangeMessage[0]);
+    curlSendSlack($allMarketChangeMessage[1]);
+
 }
 
 /**
@@ -44,7 +63,7 @@ if(count($buy_decoded['result'])>0)
 **/
 function curlSendSlack($postData)
 {
-    $url = "https://hooks.slack.com/services/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";
+    $url = "https://hooks.slack.com/services/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";
 
     $postData = '{"text":' . '"' . $postData . '"' . "}";
 
@@ -59,14 +78,13 @@ function curlSendSlack($postData)
     $output=curl_exec($ch);
 
     curl_close($ch);
-    return $output;
 }
 
 /**
 * Code that performs the rule-base comparison to trigger Slack notifs/messages
 */ 
 function compareWithPrevious($mLatestId) {
-
+    global $allMarketChangeMessage, $allMarketChangeMessageIndex;
 
     // Get the current bid & ask
     $summary = Summary::model()->findByPk($mLatestId);
@@ -80,7 +98,7 @@ function compareWithPrevious($mLatestId) {
 
     $records = Summary::model()->findAll(
          array('select'=>'id, bid, ask, open_buy_orders, open_sell_orders', 'condition'=>'market_name=:market_name' , 'order'=>'id DESC', 'limit'=>2, 'params'=>array(':market_name'=>$marketName)));
-    $previousRecord = $records[1]; 
+    $previousRecord = $records[1];
 
     // Get the previous bid & ask
     $previousBid = $previousRecord['bid'];
@@ -99,14 +117,15 @@ function compareWithPrevious($mLatestId) {
     $anyMessage = false;
     // Check 10% difference in ask
     if (($currentAsk-$previousAsk) >= 10 || ($currentAsk-$previousAsk) <= -10) {
-        $messageString = $messageString . ' | Ask Delta: ' . $deltaAsk . ' | Previous: ' . $previousAsk . ' | Current: ' . $currentAsk . "\n";
+        $messageString = $messageString . ' | Ask Delta %: ' . $deltaAsk/100 . ' | Previous: ' . $previousAsk . ' | Current: ' . $currentAsk . "\n";
         $anyMessage = true;
     }
     // Check 10% difference in bid
     if (($currentBid-$previousBid) >= 10 || ($currentBid-$previousBid) <= -10) {
-        $messageString = $messageString . ' | Bid Delta: ' . $deltaBid . ' | Previous: ' . $previousBid . ' | Current: ' . $currentBid . "\n";
+        $messageString = $messageString . ' | Bid Delta %: ' . $deltaBid/100 . ' | Previous: ' . $previousBid . ' | Current: ' . $currentBid . "\n";
         $anyMessage = true;
     }
+    /**
     // Check for increase in buy orders 
     if (($currentBuyOrders > $previousBuyOrders)) {
         $messageString = $messageString . 'There is an increase in buy orders. Previous Buy Orders: ' . $previousBuyOrders . ' | Current Buy Orders: ' . $currentBuyOrders . "\n";   
@@ -127,12 +146,13 @@ function compareWithPrevious($mLatestId) {
         $messageString = $messageString . 'There is a decrease in sell orders. Previous Sell Orders: ' . $previousSellOrders . ' | Current Sell Orders: ' . $currentSellOrders . "\n";      
         $anyMessage = true;
     }
+    **/
 
     if ($anyMessage == true) {
-        $messageString = 'Market:' . $marketName . $messageString;
+        $messageString = '*Market:'. $marketName . "*\n" . $messageString . "\n" ;
     }
 
-    curlSendSlack($messageString);
+    $allMarketChangeMessage[$allMarketChangeMessageIndex] = $allMarketChangeMessage[$allMarketChangeMessageIndex] . $messageString;
     
 }
 
