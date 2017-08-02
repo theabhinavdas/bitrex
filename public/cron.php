@@ -107,8 +107,8 @@ function compareWithPrevious($mLatestId) {
     $previousSellOrders = $previousRecord['open_sell_orders'];
 
     // Quick calculations
-    $deltaBid = $currentBid - $previousBid;
-    $deltaAsk = $currentAsk - $previousAsk;
+    $deltaBid = abs($currentBid - $previousBid)/$previousBid;
+    $deltaAsk = abs($currentAsk - $previousAsk)/$previousAsk;
     $deltaBuyOrders = $currentBuyOrders - $previousBuyOrders;
     $deltaSellOrders = $currentSellOrders - $previousSellOrders;
     
@@ -116,13 +116,13 @@ function compareWithPrevious($mLatestId) {
     $messageString = "";
     $anyMessage = false;
     // Check 10% difference in ask
-    if (($currentAsk-$previousAsk) >= 10 || ($currentAsk-$previousAsk) <= -10) {
-        $messageString = $messageString . ' | Ask Delta %: ' . $deltaAsk/100 . ' | Previous: ' . $previousAsk . ' | Current: ' . $currentAsk . "\n";
+    if ($deltaAsk >= 0.1) {
+        $messageString = $messageString . ' | Ask Delta %: ' . $deltaAsk . ' | Previous: ' . $previousAsk . ' | Current: ' . $currentAsk . "\n";
         $anyMessage = true;
     }
     // Check 10% difference in bid
-    if (($currentBid-$previousBid) >= 10 || ($currentBid-$previousBid) <= -10) {
-        $messageString = $messageString . ' | Bid Delta %: ' . $deltaBid/100 . ' | Previous: ' . $previousBid . ' | Current: ' . $currentBid . "\n";
+    if ($deltaBid >= 0.1) {
+        $messageString = $messageString . ' | Bid Delta %: ' . $deltaBid . ' | Previous: ' . $previousBid . ' | Current: ' . $currentBid . "\n";
         $anyMessage = true;
     }
     /**
