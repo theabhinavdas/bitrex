@@ -107,46 +107,27 @@ function compareWithPrevious($mLatestId) {
     $previousSellOrders = $previousRecord['open_sell_orders'];
 
     // Quick calculations
-    $deltaBid = $currentBid - $previousBid;
-    $deltaAsk = $currentAsk - $previousAsk;
+    $spread = round(((($currentBid - $currentAsk)/$currentBid)*100), 2);
+    $spreadAbs = intval($spread); // Because integer & floating point comparison has issues in PHP
     $deltaBuyOrders = $currentBuyOrders - $previousBuyOrders;
     $deltaSellOrders = $currentSellOrders - $previousSellOrders;
     
     // The whole message based on all the conditions below
     $messageString = "";
     $anyMessage = false;
-    // Check 10% difference in ask
-    if (($currentAsk-$previousAsk) >= 10 || ($currentAsk-$previousAsk) <= -10) {
-        $messageString = $messageString . ' | Ask Delta %: ' . $deltaAsk/100 . ' | Previous: ' . $previousAsk . ' | Current: ' . $currentAsk . "\n";
+    // Check for 10% change
+    if ($spread > 10 || $spread < -10) {
+        $messageString = $messageString . 'Change in spread: ' . $spread . '% | Current Bid: ' . $currentBid . ' | Current Ask: ' . $currentAsk . "\n";
         $anyMessage = true;
     }
-    // Check 10% difference in bid
-    if (($currentBid-$previousBid) >= 10 || ($currentBid-$previousBid) <= -10) {
-        $messageString = $messageString . ' | Bid Delta %: ' . $deltaBid/100 . ' | Previous: ' . $previousBid . ' | Current: ' . $currentBid . "\n";
+
+    if ($previousBuyOrders > $previousSellOrders && $currentBuyOrders < $currentSellOrders) {
+        $messageString = $messageString . ' | Current Buy Orders (' . $currentBuyOrders . ') *More* Than Sell Orders ('. $currentSellOrders .')';
+        $anyMessage = true;
+    } else if ($previousBuyOrders < $previousSellOrders && $currentBuyOrders > $currentSellOrders) {
+        $messageString = $messageString . ' | Current Buy Orders (' . $currentBuyOrders . ') *Less* Than Sell Orders ('. $currentSellOrders .')';
         $anyMessage = true;
     }
-    /**
-    // Check for increase in buy orders 
-    if (($currentBuyOrders > $previousBuyOrders)) {
-        $messageString = $messageString . 'There is an increase in buy orders. Previous Buy Orders: ' . $previousBuyOrders . ' | Current Buy Orders: ' . $currentBuyOrders . "\n";   
-        $anyMessage = true;
-    }
-    // Check for decrease in buy orders 
-    if (($currentBuyOrders < $previousBuyOrders)) {
-        $messageString = $messageString . 'There is a decrease in buy orders. Previous Buy Orders: ' . $previousBuyOrders . ' | Current Buy Orders: ' . $currentBuyOrders . "\n";   
-        $anyMessage = true;
-    }
-    // Check for increase in sell orders 
-    if (($currentSellOrders > $previousSellOrders)) {
-        $messageString = $messageString . 'There is an increase in sell orders. Previous Sell Orders: ' . $previousSellOrders . ' | Current Sell Orders: ' . $currentSellOrders . "\n";      
-        $anyMessage = true;
-    }
-    // Check for decrease in sell orders 
-    if (($currentSellOrders < $previousSellOrders)) {
-        $messageString = $messageString . 'There is a decrease in sell orders. Previous Sell Orders: ' . $previousSellOrders . ' | Current Sell Orders: ' . $currentSellOrders . "\n";      
-        $anyMessage = true;
-    }
-    **/
 
     if ($anyMessage == true) {
         $messageString = '*Market:'. $marketName . "*\n" . $messageString . "\n" ;
