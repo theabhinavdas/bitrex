@@ -55,7 +55,7 @@ if(count($buy_decoded['result'])>0)
 **/
 function curlSendSlack($postData)
 {
-    $url = "https://hooks.slack.com/services/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";
+    $url = "https://hooks.slack.com/services/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";
 
     $postData = '{"text":' . '"' . $postData . '"' . "}";
 
