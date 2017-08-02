@@ -111,10 +111,10 @@ function compareWithPrevious($mLatestId) {
     }
 
     if ($previousBuyOrders > $previousSellOrders && $currentBuyOrders < $currentSellOrders) {
-        $messageString = $messageString . 'Current Buy Orders (' . $currentBuyOrders . ') *More* Than Sell Orders ('. $currentSellOrders .')';
+        $messageString = $messageString . 'Current Trend: Buy Orders (' . $currentBuyOrders . ') *More* Than Sell Orders ('. $currentSellOrders .')';
         $anyMessage = true;
     } else if ($previousBuyOrders < $previousSellOrders && $currentBuyOrders > $currentSellOrders) {
-        $messageString = $messageString . 'Current Buy Orders (' . $currentBuyOrders . ') *Less* Than Sell Orders ('. $currentSellOrders .')';
+        $messageString = $messageString . 'Current Trend: Buy Orders (' . $currentBuyOrders . ') *Less* Than Sell Orders ('. $currentSellOrders .')';
         $anyMessage = true;
     }
 
