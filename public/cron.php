@@ -14,9 +14,7 @@ $buy_decoded = json_decode($buy_result, true);
 * also had to break up the whole string into two parts as it kept breaking
 * mid-way.
 **/
-$allMarketChangeMessage = array("", "");
-$halfMark = 126;
-$allMarketChangeMessageIndex = 0;
+$allMarketChangeMessage = "";
 
 if(count($buy_decoded['result'])>0)
 {
@@ -24,9 +22,6 @@ if(count($buy_decoded['result'])>0)
     {
         // Check if $allMarketChangeMessage array has 126 elements
         // if so, change index to 1
-        if ($halfMark == 0) {
-            $allMarketChangeMessageIndex = 1;
-        }
         $summary = new Summary();
         $summary->market_name=$result['MarketName'];
         $summary->volume=$result['Volume'];
@@ -40,11 +35,8 @@ if(count($buy_decoded['result'])>0)
         $summary->save();
         $latestId = $summary->getPrimaryKey();
         compareWithPrevious($latestId);
-
-        $halfMark--;
     }
-    curlSendSlack($allMarketChangeMessage[0]);
-    curlSendSlack($allMarketChangeMessage[1]);
+    curlSendSlack($allMarketChangeMessage);
 
 }
 
@@ -84,7 +76,7 @@ function curlSendSlack($postData)
 * Code that performs the rule-base comparison to trigger Slack notifs/messages
 */ 
 function compareWithPrevious($mLatestId) {
-    global $allMarketChangeMessage, $allMarketChangeMessageIndex;
+    global $allMarketChangeMessage;
 
     // Get the current bid & ask
     $summary = Summary::model()->findByPk($mLatestId);
@@ -106,25 +98,23 @@ function compareWithPrevious($mLatestId) {
     $previousBuyOrders = $previousRecord['open_buy_orders'];
     $previousSellOrders = $previousRecord['open_sell_orders'];
 
-    // Quick calculations
+    // Calculating spread, rounding it off to 2 decimals
     $spread = round(((($currentBid - $currentAsk)/$currentBid)*100), 2);
-    $deltaBuyOrders = $currentBuyOrders - $previousBuyOrders;
-    $deltaSellOrders = $currentSellOrders - $previousSellOrders;
     
     // The whole message based on all the conditions below
     $messageString = "";
     $anyMessage = false;
     // Check for 10% change
-    if ($spread > 10 || $spread < -10) {
+    if (abs($spread) >= 10) {
         $messageString = $messageString . 'Change in spread: ' . $spread . '% | Current Bid: ' . $currentBid . ' | Current Ask: ' . $currentAsk . "\n";
         $anyMessage = true;
     }
 
     if ($previousBuyOrders > $previousSellOrders && $currentBuyOrders < $currentSellOrders) {
-        $messageString = $messageString . ' | Current Buy Orders (' . $currentBuyOrders . ') *More* Than Sell Orders ('. $currentSellOrders .')';
+        $messageString = $messageString . 'Current Buy Orders (' . $currentBuyOrders . ') *More* Than Sell Orders ('. $currentSellOrders .')';
         $anyMessage = true;
     } else if ($previousBuyOrders < $previousSellOrders && $currentBuyOrders > $currentSellOrders) {
-        $messageString = $messageString . ' | Current Buy Orders (' . $currentBuyOrders . ') *Less* Than Sell Orders ('. $currentSellOrders .')';
+        $messageString = $messageString . 'Current Buy Orders (' . $currentBuyOrders . ') *Less* Than Sell Orders ('. $currentSellOrders .')';
         $anyMessage = true;
     }
 
@@ -132,7 +122,7 @@ function compareWithPrevious($mLatestId) {
         $messageString = '*Market:'. $marketName . "*\n" . $messageString . "\n" ;
     }
 
-    $allMarketChangeMessage[$allMarketChangeMessageIndex] = $allMarketChangeMessage[$allMarketChangeMessageIndex] . $messageString;
+    $allMarketChangeMessage = $allMarketChangeMessage . $messageString;
     
 }
 
