@@ -36,7 +36,9 @@ if(count($buy_decoded['result'])>0)
         $latestId = $summary->getPrimaryKey();
         compareWithPrevious($latestId);
     }
-    curlSendSlack($allMarketChangeMessage);
+    curlSendSlack("https://hooks.slack.com/services/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",$allMarketChangeMessage);
+    curlSendSlack("https://hooks.slack.com/services/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",$allMarketChangeMessage);
+    curlSendSlack("https://hooks.slack.com/services/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",$allMarketChangeMessage);
 
 }
 
@@ -53,9 +55,8 @@ if(count($buy_decoded['result'])>0)
 * Code to send message to the Slack channel - Bitrex-Tests
 *
 **/
-function curlSendSlack($postData)
+function curlSendSlack($url,$postData)
 {
-    $url = "https://hooks.slack.com/services/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";
 
     $postData = '{"text":' . '"' . $postData . '"' . "}";
 
