@@ -30,6 +30,7 @@ if(count($buy_decoded['result'])>0)
         $summary->bid=$result['Bid'];
         $summary->ask=$result['Ask'];
         $summary->timestamp=$result['TimeStamp'];
+        $summary->last=$result['Last'];
         $summary->open_buy_orders=$result['OpenBuyOrders'];
         $summary->open_sell_orders=$result['OpenSellOrders'];
         $summary->save();

@@ -36,7 +36,7 @@ class Summary extends CActiveRecord {
         return array(            
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id,open,low,high,timestamp,market_name,volume,timestamp,bid,ask,open_buy_orders,open_sell_orders', 'safe'),
+            array('id,open,low,high,timestamp,market_name,volume,timestamp,bid,ask,open_buy_orders,open_sell_orders,last', 'safe'),
         );
     }
 
