@@ -78,7 +78,7 @@ class Markets extends CActiveRecord {
     
     public function fetch_summary($market)
     {
-        $sql="select volume,market_name,high,low,timestamp,bid,ask,open_buy_orders,open_sell_orders from summary where market_name='$market'";
+        $sql="select volume,market_name,high,low,timestamp,bid,ask,open_buy_orders,open_sell_orders,last from summary where market_name='$market'";
         $data = Yii::app()->db->createCommand($sql)->queryAll();
         return $data;
     }
