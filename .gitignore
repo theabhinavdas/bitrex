@@ -1,0 +1,6 @@
+/public/assets/*
+/public/protected/runtime/*
+!/public/assets/README.txt
+!/public/protected/runtime/README.txt
+/nbproject/private/
+.DS_Store
