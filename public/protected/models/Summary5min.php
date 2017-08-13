@@ -24,7 +24,7 @@ class Summary5min extends CActiveRecord {
      * @return string the associated database table name
      */
     public function tableName() {
-        return 'Summary5min';
+        return 'summary5min';
     }
 
     /**
