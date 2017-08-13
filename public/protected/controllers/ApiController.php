@@ -36,5 +36,29 @@ class ApiController extends Controller {
             echo json_encode($summary);        
         }        
     }
+    
+    public function actionsummary5min() {
+        if(isset($_GET['market']))
+        {
+            $summary = Markets::model()->fetch_summary_5min($_GET['market']);
+            echo json_encode($summary);        
+        }        
+    }
+    
+    public function actionsummary30min() {
+        if(isset($_GET['market']))
+        {
+            $summary = Markets::model()->fetch_summary_30min($_GET['market']);
+            echo json_encode($summary);        
+        }        
+    }
+    
+    public function actionsummary1hr() {
+        if(isset($_GET['market']))
+        {
+            $summary = Markets::model()->fetch_summary_1hr($_GET['market']);
+            echo json_encode($summary);        
+        }        
+    }
 
 }

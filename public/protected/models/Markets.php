@@ -82,6 +82,25 @@ class Markets extends CActiveRecord {
         $data = Yii::app()->db->createCommand($sql)->queryAll();
         return $data;
     }
+    
+    public function fetch_summary_5min($market)
+    {
+        $sql="select volume,market_name,high,low,timestamp,bid,ask,open_buy_orders,open_sell_orders,last from summary5min where market_name='$market'";
+        $data = Yii::app()->db->createCommand($sql)->queryAll();
+        return $data;
+    }
+    public function fetch_summary_30min($market)
+    {
+        $sql="select volume,market_name,high,low,timestamp,bid,ask,open_buy_orders,open_sell_orders,last from summary30min where market_name='$market'";
+        $data = Yii::app()->db->createCommand($sql)->queryAll();
+        return $data;
+    }
+    public function fetch_summary_1hr($market)
+    {
+        $sql="select volume,market_name,high,low,timestamp,bid,ask,open_buy_orders,open_sell_orders,last from summary1hr where market_name='$market'";
+        $data = Yii::app()->db->createCommand($sql)->queryAll();
+        return $data;
+    }
 
     /**
      * Retrieves a list of models based on the current search/filter conditions.
