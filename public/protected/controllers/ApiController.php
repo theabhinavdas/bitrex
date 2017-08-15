@@ -60,5 +60,13 @@ class ApiController extends Controller {
             echo json_encode($summary);        
         }        
     }
+    
+    public function actionsummary1day() {
+        if(isset($_GET['market']))
+        {
+            $summary = Markets::model()->fetch_summary_1day($_GET['market']);
+            echo json_encode($summary);        
+        }        
+    }
 
 }
