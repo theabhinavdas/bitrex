@@ -12,7 +12,7 @@ if(count($buy_decoded['result'])>0)
 {
     foreach($buy_decoded['result'] as $result)
     {       
-        $summary = new Summary30min();
+        $summary = new Summary1day();
         $summary->market_name=$result['MarketName'];
         $summary->volume=$result['Volume'];
         $summary->high=$result['High'];
