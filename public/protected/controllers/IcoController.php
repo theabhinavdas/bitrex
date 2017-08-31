@@ -1,6 +1,6 @@
 <?php
 
-class ICOController extends Controller {
+class IcoController extends Controller {
 	
 	/**
      * Declares class-based actions.

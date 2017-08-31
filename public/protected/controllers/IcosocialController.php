@@ -1,12 +1,13 @@
 <?php
 
-class ICODataController extends Controller
+class IcosocialController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
 	public $layout='//layouts/column2';
+
 
 	public function init()
     {
@@ -70,14 +71,14 @@ class ICODataController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new ICOData;
+		$model=new ICOSocial;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['ICOData']))
+		if(isset($_POST['ICOSocial']))
 		{
-			$model->attributes=$_POST['ICOData'];
+			$model->attributes=$_POST['ICOSocial'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -99,9 +100,9 @@ class ICODataController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['ICOData']))
+		if(isset($_POST['ICOSocial']))
 		{
-			$model->attributes=$_POST['ICOData'];
+			$model->attributes=$_POST['ICOSocial'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -130,7 +131,7 @@ class ICODataController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('ICOData');
+		$dataProvider=new CActiveDataProvider('ICOSocial');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -141,10 +142,10 @@ class ICODataController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new ICOData('search');
+		$model=new ICOSocial('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['ICOData']))
-			$model->attributes=$_GET['ICOData'];
+		if(isset($_GET['ICOSocial']))
+			$model->attributes=$_GET['ICOSocial'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -158,7 +159,7 @@ class ICODataController extends Controller
 	 */
 	public function loadModel($id)
 	{
-		$model=ICOData::model()->findByPk($id);
+		$model=ICOSocial::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -170,7 +171,7 @@ class ICODataController extends Controller
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='icodata-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='icosocial-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
