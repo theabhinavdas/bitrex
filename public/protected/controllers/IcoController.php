@@ -50,8 +50,23 @@ class IcoController extends Controller {
     }
 
     public function actionSignup() {
-        $this->layout = '//layouts/main';
-        $this->render('/site/ico_signup'); 
+        $signupModel = new ICOUsers;
+        if (isset($_POST['email']) && isset($_POST['password'])) {
+            $user = new ICOUsers;
+            $user->email = $_POST['email'];
+            $user->password = md5($_POST['password']);
+            $user->status = 0;
+            $user->access_level = 1;
+            $user->created_at = time();
+            $user->updated_at = time();
+            $user->save();
+            $this->layout = '//layouts/main';
+            $this->render('/site/ico_login', array('model'=>$signupModel));  
+        } else {
+            $this->layout = '//layouts/main';
+            $this->render('/site/ico_signup', array('model'=>$signupModel));
+        }
+          
     }
 
     public function actionUserDashboard() {
@@ -73,8 +88,13 @@ class IcoController extends Controller {
         $this->render('/site/ico_login', array('model'=>$loginModel));
     }
 
-    public function retriveICOTokenData() {
-        // $icoTokenData = ICOTokens::model()->findAll('');
+    public function actionGetICOTokenData() {
+        if (isset($_GET['id'])) {
+            $tokenId = $_GET['id'];
+            $icoTokenData = ICOTokens::model()->findAll('ico_company_id=:ico_company_id', array('ico_company_id'=>$tokenId));
+            $data=array_map(create_function('$m','return $m->getAttributes(array(\'ico_company_id\',\'value\',\'token_name\'));'),$icoTokenData);
+            echo json_encode($data);                                                                                                                                                                                                               
+        }
     }
 
 }

@@ -118,3 +118,52 @@ Stack trace:
 REQUEST_URI=/bitrex/public/ico/icodata/admin
 HTTP_REFERER=http://localhost:8000/bitrex/public/ico/UserDashboard
 ---
+2017/08/31 15:40:23 [error] [exception.CHttpException.404] CHttpException: The system is unable to find the requested action "bitrex". in /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CController.php:484
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CController.php(271): CController->missingAction('bitrex')
+#1 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CWebApplication.php(283): CController->run('bitrex')
+#2 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CWebApplication.php(142): CWebApplication->runController('ico/bitrex/publ...')
+#3 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#4 /Applications/XAMPP/xamppfiles/htdocs/bitrex/public/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/bitrex/public/ico/bitrex/public/ico/GetICOTokenData
+HTTP_REFERER=http://localhost:8000/bitrex/public/ico/ico?id=1
+---
+2017/08/31 15:40:32 [error] [exception.CHttpException.404] CHttpException: The system is unable to find the requested action "bitrex". in /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CController.php:484
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CController.php(271): CController->missingAction('bitrex')
+#1 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CWebApplication.php(283): CController->run('bitrex')
+#2 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CWebApplication.php(142): CWebApplication->runController('ico/bitrex/publ...')
+#3 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#4 /Applications/XAMPP/xamppfiles/htdocs/bitrex/public/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/bitrex/public/ico/bitrex/public/ico/GetICOTokenData
+---
+2017/08/31 16:06:37 [error] [php] Undefined variable: model (/Applications/XAMPP/xamppfiles/htdocs/bitrex/public/protected/views/site/ico_signup.php:17)
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CController.php(870): IcoController->renderFile()
+#1 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CController.php(783): IcoController->renderPartial()
+#2 /Applications/XAMPP/xamppfiles/htdocs/bitrex/public/protected/controllers/IcoController.php(54): IcoController->render()
+#3 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/actions/CInlineAction.php(50): IcoController->actionSignup()
+#4 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CController.php(309): CInlineAction->runWithParams()
+#5 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CController.php(287): IcoController->runAction()
+#6 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CController.php(266): IcoController->runActionWithFilters()
+#7 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CWebApplication.php(283): IcoController->run()
+#8 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CWebApplication.php(142): CWebApplication->runController()
+#9 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /Applications/XAMPP/xamppfiles/htdocs/bitrex/public/index.php(15): CWebApplication->run()
+REQUEST_URI=/bitrex/public/ico/signup
+in /Applications/XAMPP/xamppfiles/htdocs/bitrex/public/protected/views/site/ico_signup.php (17)
+in /Applications/XAMPP/xamppfiles/htdocs/bitrex/public/protected/controllers/IcoController.php (54)
+in /Applications/XAMPP/xamppfiles/htdocs/bitrex/public/index.php (15)
+2017/08/31 16:09:00 [error] [php] Undefined variable: post (/Applications/XAMPP/xamppfiles/htdocs/bitrex/public/protected/controllers/IcoController.php:60)
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CController.php(287): IcoController->runAction()
+#1 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CController.php(266): IcoController->runActionWithFilters()
+#2 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CWebApplication.php(283): IcoController->run()
+#3 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CWebApplication.php(142): CWebApplication->runController()
+#4 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#5 /Applications/XAMPP/xamppfiles/htdocs/bitrex/public/index.php(15): CWebApplication->run()
+REQUEST_URI=/bitrex/public/ico/signup
+in /Applications/XAMPP/xamppfiles/htdocs/bitrex/public/protected/controllers/IcoController.php (60)
+in /Applications/XAMPP/xamppfiles/htdocs/bitrex/public/index.php (15)

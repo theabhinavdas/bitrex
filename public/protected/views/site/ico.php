@@ -59,9 +59,9 @@
 		</div>
 		<canvas id="tokenDistribution" width="100" height="100" class="tokenDistChart"></canvas>
 		<div class="text-left icoPrices">
-			<p>Pre-ICO Price: </p>
-			<p>ICO Price: </p>
-			<p>Current Market Price: </p>
+			<p><u>Pre-ICO Price:</u> <?php echo $icoData->pre_ico_price; ?></p>
+			<p><u>ICO Price:</u> <?php echo $icoData->ico_price; ?></p>
+			<p><u>Current Market Price:</u> <?php echo $icoData->current_market_price; ?></p>
 		</div>
 	</div>
 </div>
@@ -70,12 +70,27 @@
 <script>
 var ctx = document.getElementById("tokenDistribution");
 // For a pie chart
+let url = 'GetICOTokenData?id=<?php echo $_GET['id']; ?>';
+
+var xmlHttp = new XMLHttpRequest();
+xmlHttp.open( "GET", url, false ); // false for synchronous request
+xmlHttp.send( null );
+//console.log(xmlHttp.responseText);
+var result = JSON.parse(xmlHttp.responseText);
+//console.log(result[0]['ico_company_id']);
+var mLabels = [];
+var mData = [];
+for (var key in result) {
+	mLabels.push(result[key]['token_name']);
+	mData.push(result[key]['value']);
+}
+//console.log(mLabels);
 var myPieChart = new Chart(ctx,{
     type: 'pie',
     data: {
-        labels: ["Red", "Blue", "Yellow"],
+        labels: mLabels,
         datasets: [{
-            data: [22, 19, 3],
+            data: mData,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
