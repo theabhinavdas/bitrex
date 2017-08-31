@@ -25,6 +25,7 @@ $this->menu=array(
 		'email',
 		'password',
 		'status',
+		'access_level',
 		'created_at',
 		'updated_at',
 	),

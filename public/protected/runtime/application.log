@@ -41,3 +41,80 @@ Stack trace:
 REQUEST_URI=/bitrex/public/ico/login
 HTTP_REFERER=http://localhost:8000/bitrex/public/ico/login
 ---
+2017/08/31 07:32:26 [error] [php] Undefined variable: market_summary (/Applications/XAMPP/xamppfiles/htdocs/bitrex/public/protected/views/site/ico_dashboard.php:13)
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CController.php(870): ICOController->renderFile()
+#1 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CController.php(783): ICOController->renderPartial()
+#2 /Applications/XAMPP/xamppfiles/htdocs/bitrex/public/protected/controllers/IcoController.php(54): ICOController->render()
+#3 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/actions/CInlineAction.php(50): ICOController->actionUserDashboard()
+#4 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CController.php(309): CInlineAction->runWithParams()
+#5 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CController.php(287): ICOController->runAction()
+#6 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CController.php(266): ICOController->runActionWithFilters()
+#7 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CWebApplication.php(283): ICOController->run()
+#8 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CWebApplication.php(142): CWebApplication->runController()
+#9 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /Applications/XAMPP/xamppfiles/htdocs/bitrex/public/index.php(15): CWebApplication->run()
+REQUEST_URI=/bitrex/public/ico/UserDashboard
+in /Applications/XAMPP/xamppfiles/htdocs/bitrex/public/protected/views/site/ico_dashboard.php (13)
+in /Applications/XAMPP/xamppfiles/htdocs/bitrex/public/protected/controllers/IcoController.php (54)
+in /Applications/XAMPP/xamppfiles/htdocs/bitrex/public/index.php (15)
+2017/08/31 07:44:27 [error] [exception.ParseError] ParseError: syntax error, unexpected end of file in /Applications/XAMPP/xamppfiles/htdocs/bitrex/public/protected/views/site/ico_dashboard.php:17
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CBaseController.php(96): CBaseController->renderInternal('/Applications/X...', Array, true)
+#1 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CController.php(870): CBaseController->renderFile('/Applications/X...', Array, true)
+#2 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CController.php(783): CController->renderPartial('/site/ico_dashb...', Array, true)
+#3 /Applications/XAMPP/xamppfiles/htdocs/bitrex/public/protected/controllers/IcoController.php(55): CController->render('/site/ico_dashb...', Array)
+#4 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/actions/CInlineAction.php(50): ICOController->actionUserDashboard()
+#5 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CController.php(309): CInlineAction->runWithParams(Array)
+#6 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CController.php(287): CController->runAction(Object(CInlineAction))
+#7 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CWebApplication.php(283): CController->run('userdashboard')
+#9 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CWebApplication.php(142): CWebApplication->runController('ico/UserDashboa...')
+#10 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#11 /Applications/XAMPP/xamppfiles/htdocs/bitrex/public/index.php(15): CApplication->run()
+#12 {main}
+REQUEST_URI=/bitrex/public/ico/UserDashboard
+HTTP_REFERER=http://localhost:8000/bitrex/public/ico/UserDashboard
+---
+2017/08/31 07:46:29 [error] [exception.CHttpException.404] CHttpException: The system is unable to find the requested action "login". in /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CController.php:484
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CController.php(271): CController->missingAction('login')
+#1 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CWebApplication.php(283): CController->run('login')
+#2 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CWebApplication.php(142): CWebApplication->runController('site/login')
+#3 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#4 /Applications/XAMPP/xamppfiles/htdocs/bitrex/public/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/bitrex/public/site/login
+---
+2017/08/31 10:40:13 [error] [exception.CHttpException.404] CHttpException: The system is unable to find the requested action "login". in /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CController.php:484
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CController.php(271): CController->missingAction('login')
+#1 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CWebApplication.php(283): CController->run('login')
+#2 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CWebApplication.php(142): CWebApplication->runController('site/login')
+#3 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#4 /Applications/XAMPP/xamppfiles/htdocs/bitrex/public/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/bitrex/public/site/login
+---
+2017/08/31 10:41:22 [error] [exception.CHttpException.404] CHttpException: The system is unable to find the requested action "icodata". in /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CController.php:484
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CController.php(271): CController->missingAction('icodata')
+#1 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CWebApplication.php(283): CController->run('icodata')
+#2 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CWebApplication.php(142): CWebApplication->runController('ico/icodata/adm...')
+#3 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#4 /Applications/XAMPP/xamppfiles/htdocs/bitrex/public/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/bitrex/public/ico/icodata/admin
+HTTP_REFERER=http://localhost:8000/bitrex/public/ico/UserDashboard
+---
+2017/08/31 10:41:31 [error] [exception.CHttpException.404] CHttpException: The system is unable to find the requested action "icodata". in /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CController.php:484
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CController.php(271): CController->missingAction('icodata')
+#1 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CWebApplication.php(283): CController->run('icodata')
+#2 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/web/CWebApplication.php(142): CWebApplication->runController('ico/icodata/adm...')
+#3 /Applications/XAMPP/xamppfiles/htdocs/bitrex/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#4 /Applications/XAMPP/xamppfiles/htdocs/bitrex/public/index.php(15): CApplication->run()
+#5 {main}
+REQUEST_URI=/bitrex/public/ico/icodata/admin
+HTTP_REFERER=http://localhost:8000/bitrex/public/ico/UserDashboard
+---

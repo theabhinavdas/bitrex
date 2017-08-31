@@ -15,7 +15,6 @@ class ICOUsersController extends Controller
 
         Yii::app()->theme = 'abound'; // You can set it there or in config or somewhere else before calling render() method.
     }
-
 	/**
 	 * @return array action filters
 	 */
@@ -45,7 +44,7 @@ class ICOUsersController extends Controller
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
+				'users'=>array('*'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),

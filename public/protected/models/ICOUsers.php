@@ -8,6 +8,7 @@
  * @property string $email
  * @property string $password
  * @property integer $status
+ * @property integer $access_level
  * @property string $created_at
  * @property string $updated_at
  */
@@ -40,11 +41,17 @@ class ICOUsers extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('created_at, updated_at', 'required'),
-			array('status', 'numerical', 'integerOnly'=>true),
+			array('status, access_level', 'numerical', 'integerOnly'=>true),
 			array('email, password', 'length', 'max'=>255),
+			array('updated_at','default',
+	              'value'=>new CDbExpression('NOW()'),
+	              'setOnEmpty'=>false,'on'=>'update'),
+	        array('created_at,updated_at','default',
+	              'value'=>new CDbExpression('NOW()'),
+	              'setOnEmpty'=>false,'on'=>'insert'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, email, password, status, created_at, updated_at', 'safe', 'on'=>'search'),
+			array('id, email, password, status, access_level, created_at, updated_at', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -69,6 +76,7 @@ class ICOUsers extends CActiveRecord
 			'email' => 'Email',
 			'password' => 'Password',
 			'status' => 'Status',
+			'access_level' => 'Access Level',
 			'created_at' => 'Created At',
 			'updated_at' => 'Updated At',
 		);
@@ -89,6 +97,7 @@ class ICOUsers extends CActiveRecord
 		$criteria->compare('email',$this->email,true);
 		$criteria->compare('password',$this->password,true);
 		$criteria->compare('status',$this->status);
+		$criteria->compare('access_level',$this->access_level);
 		$criteria->compare('created_at',$this->created_at,true);
 		$criteria->compare('updated_at',$this->updated_at,true);
 

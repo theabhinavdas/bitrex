@@ -34,6 +34,12 @@
 	</div>
 
 	<div class="row">
+		<?php echo $form->labelEx($model,'access_level'); ?>
+		<?php echo $form->textField($model,'access_level'); ?>
+		<?php echo $form->error($model,'access_level'); ?>
+	</div>
+
+	<div class="row">
 		<?php echo $form->labelEx($model,'created_at'); ?>
 		<?php echo $form->textField($model,'created_at'); ?>
 		<?php echo $form->error($model,'created_at'); ?>

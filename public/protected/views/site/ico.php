@@ -1,48 +1,51 @@
 <div class="row">
 	<div class="col">
 		<div class="row">
-			<img src="../images/science-blockchain.png" class="logo" />
-			<h2>ICO Name</h2>
-			<h4>ICO Description</h4>
+			<!--<img src="../images/science-blockchain.png" class="logo" />-->
+		</div>
+		<div class="row">
+			<h2><?php echo $icoData->name; ?></h2>
+			<br/>
+			<p><?php echo $icoData->description; ?></p>
 		</div>
 	</div>
 	<div class="col">
-		
+
 	</div>
 	<div class="col">
 		
 	</div>
 </div>
 <div class="row">
-	<div class="col-sm-6 variousScores">
+	<div class="col-sm-6">
 		<div class="row">
 			<p>Management Social Score</p>
 			<div class="progress">
-			  <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+			  <div class="progress-bar" role="progressbar" style="width:<?php echo $icoData->management_social_score; ?>%" aria-valuenow="<?php echo $icoData->management_social_score; ?>" aria-valuemin="0" aria-valuemax="100"></div>
 			</div>
 		</div>
 		<div class="row">
 			<p>Advisors Social Score</p>
 			<div class="progress">
-			  <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+			  <div class="progress-bar" role="progressbar" style="width: <?php echo $icoData->advisors_social_score; ?>%" aria-valuenow="<?php echo $icoData->advisors_social_score; ?>" aria-valuemin="0" aria-valuemax="100"></div>
 			</div>
 		</div>
 		<div class="row">
 			<p>Social Chatter Score</p>
 			<div class="progress">
-			  <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+			  <div class="progress-bar" role="progressbar" style="width: <?php echo $icoData->social_chatter_score; ?>%" aria-valuenow="<?php echo $icoData->social_chatter_score; ?>" aria-valuemin="0" aria-valuemax="100"></div>
 			</div>
 		</div>
-		<div class="row">
+		<!--<div class="row">
 			<p>Lieklyhood of high Post ICO Spike</p>
 			<div class="progress">
-			  <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+			  <div class="progress-bar" role="progressbar" style="width: <?php echo $icoData->science_advisors_long_hold_scale; ?>%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 			</div>
-		</div>
+		</div>-->
 		<div class="row">
 			<p>Science Block Advisors - Long Hold Scale</p>
 			<div class="progress">
-			  <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+			  <div class="progress-bar" role="progressbar" style="width: <?php echo $icoData->science_advisors_long_hold_scale; ?>%" aria-valuenow="<?php echo $icoData->science_advisors_long_hold_scale; ?>" aria-valuemin="0" aria-valuemax="100"></div>
 			</div>
 		</div>
 	</div>

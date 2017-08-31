@@ -29,6 +29,7 @@ class ICOController extends Controller {
             $user = ICOUsers::model()->find('email=:email AND password=:password', array(':email'=>$_POST['email'], ':password'=>md5($_POST['password'])));
             if ($user) {
                 Yii::app()->session['user_email'] = $user->email;
+                Yii::app()->session['user_level'] = $user->access_level;
                 $this->redirect(array('UserDashboard'));
             }
         } 
@@ -37,8 +38,15 @@ class ICOController extends Controller {
     }
 
     public function actionICO() {
-    	$this->layout = '//layouts/main';
-        $this->render('/site/ico');	
+        if (isset($_GET['id'])) {
+            $icoData = ICOData::model()->find('id=:id', array(':id'=>$_GET['id']));
+            $this->layout = '//layouts/dashboard';
+            $this->render('/site/ico', array('icoData'=>$icoData)); 
+        } else {
+            $icoData = ICOData::model()->findAll();
+            $this->layout = '//layouts/dashboard';
+            $this->render('/site/ico_dashboard', array('icoDataRows'=>$icoData)); 
+        }
     }
 
     public function actionSignup() {
@@ -47,7 +55,21 @@ class ICOController extends Controller {
     }
 
     public function actionUserDashboard() {
+        $loginModel = new ICOUsers;
+        $icoData = ICOData::model()->findAll();
+        if (Yii::app()->session['user_email']) {
+            $this->layout = '//layouts/dashboard';
+            $this->render('/site/ico_dashboard', array('icoDataRows'=>$icoData)); 
+        } else {
+            $this->layout = '//layouts/main';
+            $this->render('/site/ico_login', array('model'=>$loginModel));
+        }
+    }
+
+    public function actionLogout() {
+        Yii::app()->session->destroy();
+        $loginModel = new ICOUsers;
         $this->layout = '//layouts/main';
-        $this->render('/site/ico_dashboard'); 
+        $this->render('/site/ico_login', array('model'=>$loginModel));
     }
 }
