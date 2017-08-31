@@ -37,15 +37,20 @@ $baseUrl = Yii::app()->theme->baseUrl;
       <ul class="nav navbar-nav navbar-right">
 
         <li class="active"><a href="userdashboard">Home</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="../icodata/admin">Data CRUD</a></li>
-            <li><a href="../icosocial/admin">Social CRUD</a></li>
-            <li><a href="../icotokens/admin">Tokens CRUD</a></li>
-            <li><a href="../icousers/admin">Users CRUD</a></li>
-          </ul>
-        </li>
+        <?php 
+          if (Yii::app()->session['user_level'] == 10) {
+            echo '
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="../icodata/admin">Data CRUD</a></li>
+                <li><a href="../icosocial/admin">Social CRUD</a></li>
+                <li><a href="../icotokens/admin">Tokens CRUD</a></li>
+                <li><a href="../icousers/admin">Users CRUD</a></li>
+              </ul>
+            </li>';
+          } 
+        ?>
         <li><a href="logout">Logout</a></li>
         
       </ul>
