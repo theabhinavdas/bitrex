@@ -72,8 +72,4 @@ class ICOController extends Controller {
         $this->layout = '//layouts/main';
         $this->render('/site/ico_login', array('model'=>$loginModel));
     }
-
-    public function retriveICOTokenData() {
-        // $icoTokenData = ICOTokens::model()->findAll('');
-    }
 }
