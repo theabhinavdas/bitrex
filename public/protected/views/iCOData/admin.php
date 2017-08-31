@@ -57,6 +57,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'ico_price',
 		'current_market_price',
 		'advisor_linkedin',
+		'logo_url',
 		*/
 		array(
 			'class'=>'CButtonColumn',

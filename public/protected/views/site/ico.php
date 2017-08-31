@@ -4,6 +4,7 @@
 			<!--<img src="../images/science-blockchain.png" class="logo" />-->
 		</div>
 		<div class="row">
+			<div><img src="<?php echo $icoData->logo_url; ?>" class="icologourl" />
 			<h2><?php echo $icoData->name; ?></h2>
 			<br/>
 			<p><?php echo $icoData->description; ?></p>

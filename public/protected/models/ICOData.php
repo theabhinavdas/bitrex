@@ -15,6 +15,7 @@
  * @property double $ico_price
  * @property double $current_market_price
  * @property string $advisor_linkedin
+ * @property string $logo_url
  *
  * The followings are the available model relations:
  * @property IcoSocial[] $icoSocials
@@ -50,9 +51,10 @@ class ICOData extends CActiveRecord
 			array('description, management_social_score, advisors_social_score, social_chatter_score, science_advisors_long_hold_scale, pre_ico_price, ico_price, current_market_price', 'required'),
 			array('management_social_score, advisors_social_score, social_chatter_score, science_advisors_long_hold_scale, pre_ico_price, ico_price, current_market_price', 'numerical'),
 			array('name, advisor_linkedin', 'length', 'max'=>255),
+			array('logo_url', 'length', 'max'=>555),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, name, description, management_social_score, advisors_social_score, social_chatter_score, science_advisors_long_hold_scale, pre_ico_price, ico_price, current_market_price, advisor_linkedin', 'safe', 'on'=>'search'),
+			array('id, name, description, management_social_score, advisors_social_score, social_chatter_score, science_advisors_long_hold_scale, pre_ico_price, ico_price, current_market_price, advisor_linkedin, logo_url', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -85,6 +87,7 @@ class ICOData extends CActiveRecord
 			'ico_price' => 'Ico Price',
 			'current_market_price' => 'Current Market Price',
 			'advisor_linkedin' => 'Advisor Linkedin',
+			'logo_url' => 'Logo Url',
 		);
 	}
 
@@ -110,6 +113,7 @@ class ICOData extends CActiveRecord
 		$criteria->compare('ico_price',$this->ico_price);
 		$criteria->compare('current_market_price',$this->current_market_price);
 		$criteria->compare('advisor_linkedin',$this->advisor_linkedin,true);
+		$criteria->compare('logo_url',$this->logo_url,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

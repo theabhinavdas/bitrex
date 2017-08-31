@@ -32,5 +32,6 @@ $this->menu=array(
 		'ico_price',
 		'current_market_price',
 		'advisor_linkedin',
+		'logo_url',
 	),
 )); ?>

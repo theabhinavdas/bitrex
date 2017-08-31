@@ -66,6 +66,11 @@
 		<?php echo $form->textField($model,'advisor_linkedin',array('size'=>60,'maxlength'=>255)); ?>
 	</div>
 
+	<div class="row">
+		<?php echo $form->label($model,'logo_url'); ?>
+		<?php echo $form->textField($model,'logo_url',array('size'=>60,'maxlength'=>555)); ?>
+	</div>
+
 	<div class="row buttons">
 		<?php echo CHtml::submitButton('Search'); ?>
 	</div>

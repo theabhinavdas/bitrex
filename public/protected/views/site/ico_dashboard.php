@@ -9,7 +9,7 @@
     <tbody>
     	<?php foreach ($icoDataRows as $icoRow): ?>
     	<tr>
-    		<td><?php echo $icoRow->name; ?></td>
+    		<td><img src="<?php echo $icoRow->logo_url; ?>" class="logourl"/><?php echo $icoRow->name; ?></td>
     		<td><?php echo $icoRow->description; ?></td>
     		<td><a href="ico?id=<?php echo $icoRow->id; ?>">View</a></td>
     	</tr>

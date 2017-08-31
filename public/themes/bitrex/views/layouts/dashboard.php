@@ -17,6 +17,16 @@ $baseUrl = Yii::app()->theme->baseUrl;
         width: 200px;
         margin-top: 10px;
       }
+
+      .logourl {
+        width: 50px;
+        height: 50px;
+      }
+
+      .icologourl {
+        width: 100px;
+        height: 100px;
+      }
   	</style>
 	<link rel="stylesheet" href="../css/bitrex-styles.css">
 </head>

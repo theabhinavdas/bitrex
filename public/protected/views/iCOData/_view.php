@@ -50,6 +50,10 @@
 	<?php echo CHtml::encode($data->advisor_linkedin); ?>
 	<br />
 
+	<b><?php echo CHtml::encode($data->getAttributeLabel('logo_url')); ?>:</b>
+	<?php echo CHtml::encode($data->logo_url); ?>
+	<br />
+
 	*/ ?>
 
 </div>

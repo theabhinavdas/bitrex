@@ -75,6 +75,12 @@
 		<?php echo $form->error($model,'advisor_linkedin'); ?>
 	</div>
 
+	<div class="row">
+		<?php echo $form->labelEx($model,'logo_url'); ?>
+		<?php echo $form->textField($model,'logo_url',array('size'=>60,'maxlength'=>555)); ?>
+		<?php echo $form->error($model,'logo_url'); ?>
+	</div>
+
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>

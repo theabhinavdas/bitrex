@@ -8,7 +8,6 @@ class ICODataController extends Controller
 	 */
 	public $layout='//layouts/column2';
 
-	
 	public function init()
     {
         //Yii::app()->themeManager->basePath .= '/admin';
